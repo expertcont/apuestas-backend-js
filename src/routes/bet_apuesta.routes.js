@@ -4,7 +4,7 @@ const { obtenerTodasApuestas, obtenerApuesta, crearApuesta, actualizarApuesta, e
 
 router.get('/apuesta/:id_anfitrion', obtenerTodasApuestas);
 
-router.get('/apuesta/:id', obtenerApuesta);
+router.get('/apuesta/:id_anfitrion/:id', obtenerApuesta);
 router.post('/apuesta', crearApuesta);
 router.put('/apuesta/:id', actualizarApuesta);
 router.delete('/apuesta/:id', eliminarApuesta);
