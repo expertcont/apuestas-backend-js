@@ -4,7 +4,7 @@ const obtenerTodasApuestas = async (req,res,next)=> {
     try {
         const { id_anfitrion } = req.params;
         const result = await pool.query(
-            `SELECT id,id_evento,equipo_sel,monto,cast(fecha_apuesta as varchar)::varchar(16) as fecha_apuesta,apuesta_estado,apuesta_resultado
+            `SELECT id,id_evento,equipo_sel,monto,cast(fecha_apuesta as varchar)::varchar(10) as fecha_apuesta,apuesta_estado,apuesta_resultado
              FROM bet_apuesta 
              WHERE id_anfitrion = $1
              ORDER BY fecha_apuesta DESC`,[id_anfitrion]);
@@ -18,7 +18,9 @@ const obtenerTodasApuestas = async (req,res,next)=> {
 const obtenerApuesta = async (req,res,next)=> {
     try {
         const { id } = req.params;
-        const result = await pool.query(`SELECT id,id_evento,equipo_sel,monto,cast(fecha_apuesta as varchar)::varchar(16) as fecha_apuesta,apuesta_estado,apuesta_resultado FROM bet_apuesta WHERE id = $1`, [id]);
+        const result = await pool.query(
+            `SELECT id,id_evento,equipo_sel,monto,cast(fecha_apuesta as varchar)::varchar(10) as fecha_apuesta,apuesta_estado,apuesta_resultado 
+            FROM bet_apuesta WHERE id = $1`, [id]);
 
         if (result.rows.length === 0) {
         return res.status(404).json({ error: 'Apuesta no encontrada' });
