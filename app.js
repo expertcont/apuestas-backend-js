@@ -5,6 +5,7 @@ const cors = require('cors');
 
 //microservicio admin
 
+const bet_apuestaRoutes = require('./src/routes/bet_apuesta.routes');
 const usuarioRoutes = require('./src/routes/usuario.routes');
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json()); //para reconocer json en express, parametros POST
 app.use(express.text()); //new para text ;)
 
 app.use(usuarioRoutes);
+app.use(bet_apuestaRoutes);
 
 
 app.use((err, req, res, next) => {

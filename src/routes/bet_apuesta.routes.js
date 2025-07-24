@@ -2,7 +2,7 @@ const {Router} = require('express');
 const router = Router();
 const { obtenerTodasApuestas, obtenerApuesta, crearApuesta, actualizarApuesta, eliminarApuesta } = require('../controllers/bet_apuesta.controllers');
 
-router.get('/apuesta', obtenerTodasApuestas);
+router.get('/apuesta/:usuario_id', obtenerTodasApuestas);
 
 router.get('/apuesta/:id', obtenerApuesta);
 router.post('/apuesta', crearApuesta);
