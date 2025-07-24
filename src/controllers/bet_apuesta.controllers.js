@@ -4,7 +4,7 @@ const obtenerTodasApuestas = async (req,res,next)=> {
     try {
         const { id_anfitrion } = req.params;
         const result = await pool.query(
-            `SELECT id,id_evento,equipo_sel,monto,cast(fecha_apuesta as varchar)::varchar(10) as fecha_apuesta,apuesta_estado,apuesta_resultado
+            `SELECT id,evento,liga,pais,monto,cast(fecha_apuesta as varchar)::varchar(10) as fecha_apuesta,apuesta_estado,apuesta_resultado
              FROM bet_apuesta 
              WHERE id_anfitrion = $1
              ORDER BY fecha_apuesta DESC`,[id_anfitrion]);
@@ -21,7 +21,7 @@ const obtenerApuesta = async (req,res,next)=> {
         const { id } = req.params;
         //console.log(id);
         const result = await pool.query(
-            `SELECT id,id_evento,equipo_sel,monto,cast(fecha_apuesta as varchar)::varchar(10) as fecha_apuesta,apuesta_estado,apuesta_resultado 
+            `SELECT id,evento,liga,pais,monto,cast(fecha_apuesta as varchar)::varchar(10) as fecha_apuesta,apuesta_estado,apuesta_resultado 
             FROM bet_apuesta WHERE id = $1`, [id]);
 
         if (result.rows.length === 0) {
@@ -39,8 +39,9 @@ const crearApuesta = async (req,res,next)=> {
     try {
         const {
             id_anfitrion,
-            id_evento,
-            equipo_sel,
+            evento,
+            liga,
+            pais,
             monto,
             apuesta_estado,
             fecha_apuesta
@@ -48,10 +49,10 @@ const crearApuesta = async (req,res,next)=> {
 
         const result = await pool.query(
         `INSERT INTO bet_apuesta 
-            (id_anfitrion, id_evento, equipo_sel, monto, apuesta_estado,fecha_apuesta) 
-        VALUES ($1, $2, $3, $4, $5, $6) 
+            (id_anfitrion, evento, liga, pais, monto, apuesta_estado,fecha_apuesta) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7) 
         RETURNING *`,
-        [id_anfitrion, id_evento, equipo_sel, monto, apuesta_estado, fecha_apuesta]
+        [id_anfitrion, evento, liga,pais, monto, apuesta_estado, fecha_apuesta]
         );
 
         res.status(201).json(result.rows[0]);
@@ -81,18 +82,16 @@ const actualizarApuesta = async (req,res,next)=> {
     try {
         const { id } = req.params;
         const {
-            equipo_sel,
             monto,
             apuesta_estado
         } = req.body;
 
         const result = await pool.query(
         `UPDATE bet_apuesta SET 
-            equipo_sel = COALESCE($1, equipo_sel),
-            monto = COALESCE($2, monto),
-            apuesta_estado = COALESCE($3, apuesta_estado)
-        WHERE id = $4
-        RETURNING *`,[equipo_sel, monto, apuesta_estado, id]);
+            monto = COALESCE($1, monto),
+            apuesta_estado = COALESCE($2, apuesta_estado)
+        WHERE id = $3
+        RETURNING *`,[monto, apuesta_estado, id]);
 
         if (result.rows.length === 0) {
         return res.status(404).json({ error: 'Apuesta no encontrada' });
