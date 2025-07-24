@@ -1,6 +1,7 @@
 
 const obtenerPartidosPorFecha = async (req, res) => {
   const { fecha } = req.params;
+  console.log(fecha);
 
   if (!fecha) {
     return res.status(400).json({ error: 'Falta el parámetro fecha' });
@@ -8,7 +9,7 @@ const obtenerPartidosPorFecha = async (req, res) => {
 
   const url = `https://www.thesportsdb.com/api/v1/json/123/eventsday.php?d=${fecha}&s=Soccer`;
   console.log(url);
-  
+
 
   try {
     const response = await fetch(url);
