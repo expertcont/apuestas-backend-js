@@ -55,7 +55,12 @@ const crearApuesta = async (req,res,next)=> {
         [id_anfitrion, evento, liga,pais, monto, apuesta_estado, fecha_apuesta]
         );
 
-        res.status(201).json(result.rows[0]);
+        //res.status(201).json(result.rows[0]);
+        res.status(201).json({
+            success: true,
+            data: result.rows[0]
+            });        
+            
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Error al crear la apuesta' });
