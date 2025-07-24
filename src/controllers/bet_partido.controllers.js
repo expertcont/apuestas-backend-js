@@ -20,13 +20,13 @@ const obtenerPartidosPorFecha = async (req, res) => {
 
     // Filtrar solo los campos importantes
     const eventosFiltrados = eventos.map(evento => ({
-      idEvent: evento.idEvent,
-      strEvent: evento.strEvent,
-      strSport: evento.strSport,
-      strCountry: evento.strCountry,
-      strLeague: evento.strLeague,
-      dateEvent: evento.dateEvent,
-      strStatus: evento.strStatus
+      id_evento: evento.idEvent,
+      evento: evento.strEvent,
+      deporte: evento.strSport,
+      pais: evento.strCountry,
+      liga: evento.strLeague,
+      fecha: evento.dateEvent,
+      estado: evento.strStatus
     }));
 
     res.json(eventosFiltrados);
