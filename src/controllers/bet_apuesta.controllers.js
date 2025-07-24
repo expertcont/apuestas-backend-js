@@ -2,9 +2,11 @@ const pool = require('../models/db');
 
 const obtenerTodasApuestas = async (req,res,next)=> {
     try {
+        const { id_anfitrion } = req.params;
         const result = await pool.query(
             `SELECT id,id_evento,equipo_sel,monto,cast(fecha_apuesta as varchar)::varchar(16) as fecha_apuesta,apuesta_estado,apuesta_resultado
              FROM bet_apuesta 
+             WHERE id_anfitrion = $1
              ORDER BY fecha_apuesta DESC`
         );
         res.json(result.rows);
