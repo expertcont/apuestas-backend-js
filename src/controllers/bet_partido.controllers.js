@@ -7,6 +7,8 @@ const obtenerPartidosPorFecha = async (req, res) => {
   }
 
   const url = `https://www.thesportsdb.com/api/v1/json/123/eventsday.php?d=${fecha}&s=Soccer`;
+  console.log(url);
+  
 
   try {
     const response = await fetch(url);
