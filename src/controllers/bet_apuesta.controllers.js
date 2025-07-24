@@ -18,6 +18,7 @@ const obtenerTodasApuestas = async (req,res,next)=> {
 const obtenerApuesta = async (req,res,next)=> {
     try {
         const { id } = req.params;
+        console.log(id);
         const result = await pool.query(
             `SELECT id,id_evento,equipo_sel,monto,cast(fecha_apuesta as varchar)::varchar(10) as fecha_apuesta,apuesta_estado,apuesta_resultado 
             FROM bet_apuesta WHERE id = $1`, [id]);
@@ -28,6 +29,7 @@ const obtenerApuesta = async (req,res,next)=> {
 
         res.json(result.rows[0]);
     } catch (err) {
+        console.log(err);
         res.status(500).json({ error: 'Error al obtener la apuesta' });
     }
 };
