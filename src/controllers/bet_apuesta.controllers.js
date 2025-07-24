@@ -17,9 +17,9 @@ const obtenerTodasApuestas = async (req,res,next)=> {
 
 const obtenerApuesta = async (req,res,next)=> {
     try {
-        console.log(req.params);
+        //console.log(req.params);
         const { id } = req.params;
-        console.log(id);
+        //console.log(id);
         const result = await pool.query(
             `SELECT id,id_evento,equipo_sel,monto,cast(fecha_apuesta as varchar)::varchar(10) as fecha_apuesta,apuesta_estado,apuesta_resultado 
             FROM bet_apuesta WHERE id = $1`, [id]);
@@ -83,19 +83,17 @@ const actualizarApuesta = async (req,res,next)=> {
         const {
             equipo_sel,
             monto,
-            apuesta_estado,
-            apuesta_resultado
+            apuesta_estado
         } = req.body;
 
         const result = await pool.query(
         `UPDATE bet_apuesta SET 
             equipo_sel = COALESCE($1, equipo_sel),
             monto = COALESCE($2, monto),
-            apuesta_estado = COALESCE($3, apuesta_estado),
-            apuesta_resultado = COALESCE($4, apuesta_resultado)
-        WHERE id = $5
+            apuesta_estado = COALESCE($3, apuesta_estado)
+        WHERE id = $4
         RETURNING *`,
-        [equipo_sel, monto, apuesta_estado, apuesta_resultado, id]
+        [equipo_sel, monto, apuesta_estado, id]
         );
 
         if (result.rows.length === 0) {
