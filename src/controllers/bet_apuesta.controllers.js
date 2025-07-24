@@ -17,6 +17,7 @@ const obtenerTodasApuestas = async (req,res,next)=> {
 
 const obtenerApuesta = async (req,res,next)=> {
     try {
+        console.log(req.params);
         const { id } = req.params;
         console.log(id);
         const result = await pool.query(
