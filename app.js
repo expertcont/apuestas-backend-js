@@ -5,6 +5,7 @@ const cors = require('cors');
 
 //microservicio admin
 
+const bet_partidoRoutes = require('./src/routes/bet_partido.routes');
 const bet_apuestaRoutes = require('./src/routes/bet_apuesta.routes');
 const usuarioRoutes = require('./src/routes/usuario.routes');
 
@@ -19,6 +20,7 @@ app.use(express.text()); //new para text ;)
 
 app.use(usuarioRoutes);
 app.use(bet_apuestaRoutes);
+app.use(bet_partidoRoutes);
 
 
 app.use((err, req, res, next) => {
