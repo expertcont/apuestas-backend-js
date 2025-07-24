@@ -1,4 +1,3 @@
-const axios = require('axios');
 
 const obtenerPartidosPorFecha = async (req, res) => {
   const { fecha } = req.params;
@@ -10,8 +9,14 @@ const obtenerPartidosPorFecha = async (req, res) => {
   const url = `https://www.thesportsdb.com/api/v1/json/123/eventsday.php?d=${fecha}&s=Soccer`;
 
   try {
-    const response = await axios.get(url);
-    const eventos = response.data.events || [];
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const eventos = data.events || [];
     res.json({ eventos });
   } catch (error) {
     console.error('Error al consultar TheSportsDB:', error.message);

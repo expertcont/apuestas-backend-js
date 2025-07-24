@@ -92,9 +92,7 @@ const actualizarApuesta = async (req,res,next)=> {
             monto = COALESCE($2, monto),
             apuesta_estado = COALESCE($3, apuesta_estado)
         WHERE id = $4
-        RETURNING *`,
-        [equipo_sel, monto, apuesta_estado, id]
-        );
+        RETURNING *`,[equipo_sel, monto, apuesta_estado, id]);
 
         if (result.rows.length === 0) {
         return res.status(404).json({ error: 'Apuesta no encontrada' });
