@@ -27,8 +27,8 @@ const obtenerApuesta = async (req,res,next)=> {
 const crearApuesta = async (req,res,next)=> {
     try {
         const {
-            usuario_id,
-            evento_id,
+            id_anfitrion,
+            id_evento,
             equipo_sel,
             monto,
             apuesta_estado
@@ -36,10 +36,10 @@ const crearApuesta = async (req,res,next)=> {
 
         const result = await pool.query(
         `INSERT INTO bet_apuesta 
-            (usuario_id, evento_id, equipo_sel, monto, apuesta_estado) 
+            (id_anfitrion, id_evento, equipo_sel, monto, apuesta_estado) 
         VALUES ($1, $2, $3, $4, $5) 
         RETURNING *`,
-        [usuario_id, evento_id, equipo_sel, monto, apuesta_estado]
+        [id_anfitrion, id_evento, equipo_sel, monto, apuesta_estado]
         );
 
         res.status(201).json(result.rows[0]);
