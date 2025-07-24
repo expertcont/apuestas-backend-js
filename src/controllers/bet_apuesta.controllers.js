@@ -3,12 +3,13 @@ const pool = require('../models/db');
 const obtenerTodasApuestas = async (req,res,next)=> {
     try {
         const result = await pool.query(
-            `SELECT id,id_evento,equipo_sel,monto,cast(fecha_apuesta as varchar):varchar(20) as fecha_apuesta,apuesta_estado,apuesta_resultado
+            `SELECT id,id_evento,equipo_sel,monto,cast(fecha_apuesta as varchar)::varchar(16) as fecha_apuesta,apuesta_estado,apuesta_resultado
              FROM bet_apuesta 
              ORDER BY fecha_apuesta DESC`
         );
         res.json(result.rows);
     } catch (err) {
+        console.log(err);
         res.status(500).json({ error: 'Error al obtener apuestas' });
     }
 };
@@ -16,7 +17,7 @@ const obtenerTodasApuestas = async (req,res,next)=> {
 const obtenerApuesta = async (req,res,next)=> {
     try {
         const { id } = req.params;
-        const result = await pool.query(`SELECT * FROM bet_apuesta WHERE id = $1`, [id]);
+        const result = await pool.query(`SELECT id,id_evento,equipo_sel,monto,cast(fecha_apuesta as varchar)::varchar(16) as fecha_apuesta,apuesta_estado,apuesta_resultado FROM bet_apuesta WHERE id = $1`, [id]);
 
         if (result.rows.length === 0) {
         return res.status(404).json({ error: 'Apuesta no encontrada' });
