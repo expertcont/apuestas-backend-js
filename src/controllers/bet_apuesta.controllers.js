@@ -7,8 +7,7 @@ const obtenerTodasApuestas = async (req,res,next)=> {
             `SELECT id,id_evento,equipo_sel,monto,cast(fecha_apuesta as varchar)::varchar(16) as fecha_apuesta,apuesta_estado,apuesta_resultado
              FROM bet_apuesta 
              WHERE id_anfitrion = $1
-             ORDER BY fecha_apuesta DESC`
-        );
+             ORDER BY fecha_apuesta DESC`,[id_anfitrion]);
         res.json(result.rows);
     } catch (err) {
         console.log(err);
