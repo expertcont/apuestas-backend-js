@@ -154,8 +154,9 @@ export class Apuesta {
     return this.monto.value;
   }
 
-  // 👇 Getter semántico
+  // 👇 Getter semántico, evita usar public en id_apuesta
   get id(): number | null {
     return this.id_apuesta;
   }
+  /////
 }
